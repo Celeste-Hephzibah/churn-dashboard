@@ -71,7 +71,7 @@ col2.metric("Avg Churn Risk", f"{filtered['churn_prob'].mean():.1%}" if len(filt
 high_risk = (filtered["churn_prob"] > 0.5).sum()
 col3.metric("High-Risk Customers", f"{high_risk:,}")
 revenue_at_risk = (filtered["churn_prob"] * filtered["MonthlyCharges"]).sum()
-col4.metric("Monthly Revenue at Risk", f"${revenue_at_risk:,.0f}")
+col4.metric("Monthly Revenue at Risk", f"₹{revenue_at_risk:,.0f}")
 
 st.divider()
 
@@ -99,7 +99,7 @@ st.subheader("🚨 Customers Ranked by Churn Risk")
 display_cols = ["tenure", "Contract", "InternetService", "MonthlyCharges", "churn_prob"]
 top_risk = filtered.sort_values("churn_prob", ascending=False)[display_cols].head(25)
 st.dataframe(
-    top_risk.style.format({"churn_prob": "{:.1%}", "MonthlyCharges": "${:.2f}"})
+    top_risk.style.format({"churn_prob": "{:.1%}", "MonthlyCharges": "₹{:.2f}"})
     .background_gradient(subset=["churn_prob"], cmap="Reds"),
     use_container_width=True,
 )
@@ -128,7 +128,7 @@ else:
         st.write(f"**Contract:** {row['Contract']}")
         st.write(f"**Tenure:** {row['tenure']} months")
         st.write(f"**Internet:** {row['InternetService']}")
-        st.write(f"**Monthly Charges:** ${row['MonthlyCharges']:.2f}")
+        st.write(f"**Monthly Charges:** ₹{row['MonthlyCharges']:.2f}")
         st.write(f"**Payment Method:** {row['PaymentMethod']}")
 
     with right:
